@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Collector vs Scalper</title>
+<style>
+@font-face { font-family: "Bricolage"; src: url("assets/bricolage-800.woff2") format("woff2"); font-weight: 800; }
+:root {
+  --bg: #070A14;
+  --ink: #F4F6FB;
+  --dim: #8A93AD;
+  --yellow: #FFCB05;
+  --red: #FF3B47;
+  --blue: #3A6BFF;
+  --panel: #111833;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; background: var(--bg); overflow: hidden; }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: var(--ink);
+  font-family: "Bricolage", "Inter", sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+#bg { position: absolute; inset: 0; }
+.glow { position: absolute; width: 1400px; height: 1400px; left: -160px; top: 260px; border-radius: 50%; opacity: 0; }
+#glowY { background: radial-gradient(circle, rgba(255,203,5,.22), rgba(255,203,5,0) 60%); }
+#glowR { background: radial-gradient(circle, rgba(255,59,71,.26), rgba(255,59,71,0) 60%); }
+.mono { font-family: "JetBrains Mono", monospace; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.top { position: absolute; top: 120px; left: 0; right: 0; text-align: center; font-size: 28px; color: var(--dim); }
+.top b { color: var(--yellow); }
+.brand { position: absolute; bottom: 300px; left: 0; right: 0; text-align: center; font-size: 26px; color: var(--dim); opacity: .8; }
+.flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+
+.scene { position: absolute; inset: 0; padding: 230px 100px 420px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; gap: 34px; visibility: hidden; }
+.big { font-size: 100px; line-height: .98; }
+.mid { font-size: 76px; line-height: 1.02; }
+.body { font-size: 56px; line-height: 1.12; }
+.huge { font-size: 230px; line-height: .9; letter-spacing: -0.04em; }
+.y { color: var(--yellow); }
+.r { color: var(--red); }
+.d { color: var(--dim); }
+.w { display: inline-block; white-space: pre; }
+.pill { display: inline-flex; align-items: center; gap: 14px; padding: 14px 26px; border-radius: 999px;
+  background: var(--yellow); color: #0A0A0A; font-size: 30px; white-space: nowrap; }
+.pill.red { background: var(--red); color: #fff; }
+.pill.ghost { background: transparent; border: 3px solid var(--dim); color: var(--ink); }
+.foot { font-size: 26px; color: var(--dim); }
+
+/* booster box */
+.box { position: relative; width: 470px; height: 360px; }
+.box .lid { position: absolute; top: 0; left: 0; width: 470px; height: 90px;
+  clip-path: polygon(9% 0, 100% 0, 91% 100%, 0 100%); background: linear-gradient(90deg,#5C86FF,#7FA0FF); }
+.box .side { position: absolute; top: 0; right: 0; width: 44px; height: 360px;
+  clip-path: polygon(0 25%, 100% 0, 100% 75%, 0 100%); background: #1B2E8A; }
+.box .front { position: absolute; left: 0; bottom: 0; width: 428px; height: 270px; border-radius: 10px;
+  background: linear-gradient(135deg,#1F3BB3,#3A6BFF 55%,#2447C9); overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 26px 30px; }
+.box .burst { position: absolute; right: 26px; top: 22px; width: 130px; height: 130px; border-radius: 50%;
+  background: var(--yellow); color: #0A0A0A; display: grid; place-items: center; font-size: 40px;
+  box-shadow: 0 0 0 10px rgba(255,203,5,.25); }
+.box .label { font-size: 48px; line-height: 1; color: #fff; }
+.box .sub { font-size: 22px; color: rgba(255,255,255,.75); margin-top: 8px; }
+.box.empty .lid { background: #02030A; }
+.box.empty .front { background: linear-gradient(135deg,#1A2350,#26326E); }
+.stamp { position: absolute; left: 50%; top: 52%; transform: translate(-50%,-50%) rotate(-12deg);
+  border: 12px solid var(--red); color: var(--red); font-size: 120px; padding: 6px 36px; border-radius: 18px;
+  background: rgba(7,10,20,.55); letter-spacing: .02em; }
+
+/* listing panel */
+.panel { width: 860px; background: var(--panel); border: 2px solid #26305A; border-radius: 34px; padding: 34px 38px; text-align: left; }
+.panel .head { font-size: 26px; color: var(--dim); margin-bottom: 18px; }
+.row { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 26px 0; border-top: 2px solid #232C52; font-size: 48px; }
+.row .strike { position: absolute; left: 0; top: 50%; height: 7px; width: 620px; background: var(--red); border-radius: 4px; transform-origin: left; }
+.row .x { flex: none; font-size: 24px; background: var(--red); color: #fff; padding: 10px 16px; border-radius: 12px; }
+
+/* chain */
+.chain { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.step { display: flex; align-items: center; gap: 22px; width: 700px; padding: 26px 34px; border-radius: 28px;
+  background: var(--panel); border: 2px solid #26305A; font-size: 64px; text-align: left; }
+.step .n { flex: none; width: 70px; height: 70px; border-radius: 50%; background: var(--yellow); color: #0A0A0A; display: grid; place-items: center; font-size: 38px; }
+.arrow { font-size: 48px; color: var(--dim); line-height: 1; }
+
+/* id card */
+.idwrap { position: relative; width: 640px; height: 400px; }
+.idcard { position: absolute; inset: 0; border-radius: 30px; background: linear-gradient(135deg,#E9EDF7,#C9D2E8);
+  padding: 40px; display: flex; gap: 36px; overflow: hidden; }
+.idcard .photo { width: 190px; height: 240px; border-radius: 16px; background: #9AA6C4; position: relative; overflow: hidden; }
+.idcard .photo::before { content: ""; position: absolute; left: 50%; top: 40px; width: 92px; height: 92px; margin-left: -46px; border-radius: 50%; background: #6C7899; }
+.idcard .photo::after { content: ""; position: absolute; left: 50%; bottom: -60px; width: 170px; height: 150px; margin-left: -85px; border-radius: 50%; background: #6C7899; }
+.idcard .lines { flex: 1; display: flex; flex-direction: column; gap: 22px; padding-top: 10px; }
+.idcard .lines i { display: block; height: 22px; border-radius: 11px; background: #A5B0CB; }
+.idcard .chip { position: absolute; left: 40px; bottom: 34px; width: 92px; height: 66px; border-radius: 12px; background: linear-gradient(135deg,#F2C94C,#C9971B); }
+.idcard .tag { position: absolute; right: 40px; bottom: 30px; color: #3B4566; font-size: 40px; }
+.scan { position: absolute; left: -20px; right: -20px; height: 10px; border-radius: 5px; background: var(--yellow);
+  box-shadow: 0 0 30px 10px rgba(255,203,5,.55); }
+.corner { position: absolute; width: 70px; height: 70px; border: 8px solid var(--yellow); }
+.corner.tl { left: -30px; top: -30px; border-right: 0; border-bottom: 0; border-radius: 20px 0 0 0; }
+.corner.tr { right: -30px; top: -30px; border-left: 0; border-bottom: 0; border-radius: 0 20px 0 0; }
+.corner.bl { left: -30px; bottom: -30px; border-right: 0; border-top: 0; border-radius: 0 0 0 20px; }
+.corner.br { right: -30px; bottom: -30px; border-left: 0; border-top: 0; border-radius: 0 0 20px 0; }
+
+/* counter + shelf */
+.counter { font-size: 128px; letter-spacing: -0.04em; color: var(--yellow); font-variant-numeric: tabular-nums; }
+.shelf { width: 760px; display: flex; flex-direction: column; gap: 70px; padding: 30px 0; }
+.shelf i { display: block; height: 16px; border-radius: 8px; background: #2A3460; }
+
+/* versus */
+.vs { width: 880px; display: flex; flex-direction: column; gap: 26px; }
+.side { border-radius: 34px; padding: 34px 40px; text-align: left; background: var(--panel); border: 2px solid #26305A; }
+.side .who { display: flex; align-items: center; gap: 20px; font-size: 64px; }
+.side .flag { font-family: "Noto Color Emoji"; font-size: 70px; }
+.side ul { list-style: none; margin-top: 18px; display: flex; flex-wrap: wrap; gap: 14px; }
+.side li { font-size: 34px; padding: 12px 22px; border-radius: 999px; background: rgba(255,203,5,.14); color: var(--yellow); }
+.side.my { border-color: rgba(255,59,71,.6); }
+.side .none { margin-top: 14px; font-size: 92px; color: var(--red); }
+
+/* bars */
+.bars { display: flex; align-items: flex-end; justify-content: center; gap: 70px; margin-top: 20px; }
+.bar { width: 230px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.bar .fill { width: 100%; border-radius: 22px 22px 6px 6px; }
+.bar .lbl { font-size: 30px; color: var(--dim); }
+.bar.retail .fill { height: 150px; background: #2F3B70; }
+.bar.scalp .fill { height: 440px; background: linear-gradient(180deg,var(--red),#A3121C); transform-origin: bottom; }
+
+/* equations */
+.eq { display: flex; align-items: center; gap: 22px; font-size: 76px; }
+.eq .k { padding: 10px 26px; border-radius: 20px; background: var(--panel); border: 2px solid #26305A; }
+.eq .k.hl { background: var(--yellow); color: #0A0A0A; border-color: var(--yellow); }
+.eq .a { color: var(--dim); }
+
+.dates { display: flex; flex-direction: column; gap: 22px; align-items: center; }
+.date { display: flex; align-items: center; gap: 24px; font-size: 52px; white-space: nowrap; }
+.rules { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.ring { position: absolute; left: 50%; top: 50%; width: 300px; height: 300px; margin: -150px 0 0 -150px; border-radius: 50%; border: 10px solid var(--yellow); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="1080" height="1920"></canvas>
+  <div class="glow" id="glowY"></div>
+  <div class="glow" id="glowR"></div>
+  <div class="top mono"><b>●</b>&nbsp; Pokémon TCG · Malaysia</div>
+
+  <!-- 1 hook -->
+  <section class="scene" id="s1">
+    <div class="pill red mono">Breaking · Japan</div>
+    <div class="big words">Japan just banned selling</div>
+    <div class="huge y" id="s1empty">EMPTY</div>
+    <div class="big words">Pokémon boxes.</div>
+    <div class="box" id="s1box">
+      <div class="lid"></div><div class="side"></div>
+      <div class="front"><div class="burst">TCG</div><div class="label">BOOSTER BOX</div><div class="sub mono">36 packs</div></div>
+      <div class="stamp" id="s1stamp">BANNED</div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="scene" id="s2">
+    <div class="big" id="s2a">Not cards.</div>
+    <div class="huge y" id="s2b" style="font-size:170px">Empty boxes.</div>
+    <div class="box empty" id="s2box">
+      <div class="lid"></div><div class="side"></div>
+      <div class="front"><div class="label">EMPTY</div><div class="sub mono">0 packs</div></div>
+    </div>
+  </section>
+
+  <!-- 3 news -->
+  <section class="scene" id="s3">
+    <div class="pill mono">News · 13 Oct 2026</div>
+    <div class="mid words">Yahoo! Auctions Japan now blocks:</div>
+    <div class="panel">
+      <div class="head mono">New listing rules</div>
+      <div class="row"><span>Whole cases of boxes</span><span class="x mono">Blocked</span><i class="strike"></i></div>
+      <div class="row"><span>Empty booster boxes</span><span class="x mono">Blocked</span><i class="strike"></i></div>
+      <div class="row"><span>Empty booster packs</span><span class="x mono">Blocked</span><i class="strike"></i></div>
+    </div>
+    <div class="foot mono">Starting with the 30th Celebration set</div>
+  </section>
+
+  <!-- 4 why -->
+  <section class="scene" id="s4">
+    <div class="big words">Why would anyone buy an empty box?</div>
+    <div class="chain">
+      <div class="step"><span class="n">1</span>Refill it.</div>
+      <div class="arrow">↓</div>
+      <div class="step"><span class="n">2</span>Reseal it.</div>
+      <div class="arrow">↓</div>
+      <div class="step"><span class="n">3</span>Sell it as <span class="y">“new”.</span></div>
+    </div>
+  </section>
+
+  <!-- 5 id -->
+  <section class="scene" id="s5">
+    <div class="pill mono">Japan, again</div>
+    <div class="idwrap" id="s5id">
+      <div class="idcard"><div class="photo"></div><div class="lines"><i style="width:90%"></i><i style="width:70%"></i><i style="width:80%"></i><i style="width:50%"></i></div><div class="chip"></div><div class="tag mono">ID</div></div>
+      <div class="scan" id="s5scan"></div>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    </div>
+    <div class="mid words">Pokémon’s plan: scan your government ID to enter some card lotteries.</div>
+    <div class="foot mono">Announced May 2026</div>
+  </section>
+
+  <!-- 6 counter -->
+  <section class="scene" id="s6">
+    <div class="foot mono" style="font-size:32px">The Pokémon Company printed</div>
+    <div class="counter" id="count">0</div>
+    <div class="mid">cards in one year.</div>
+    <div class="shelf" id="s6shelf"><i></i><i></i><i></i></div>
+    <div class="mid words" id="s6b">…and the shelves are still empty.</div>
+  </section>
+
+  <!-- 7 versus -->
+  <section class="scene" id="s7">
+    <div class="vs">
+      <div class="side jp"><div class="who"><span class="flag">🇯🇵</span>Japan</div>
+        <ul><li>Resale bans</li><li>Lotteries</li><li>ID checks</li></ul></div>
+      <div class="side my"><div class="who"><span class="flag">🇲🇾</span>Malaysia</div>
+        <div class="none">Nothing like it.</div></div>
+    </div>
+  </section>
+
+  <!-- 8 us -->
+  <section class="scene" id="s8">
+    <div class="big words">So who protects the hobby here?</div>
+    <div style="position:relative">
+      <i class="ring" id="s8ring"></i>
+      <div class="huge y" id="s8us" style="font-size:340px">US.</div>
+    </div>
+  </section>
+
+  <!-- 9 bars -->
+  <section class="scene" id="s9">
+    <div class="mid words">A scalper’s plan needs one thing:</div>
+    <div class="bars">
+      <div class="bar retail"><div class="fill"></div><div class="lbl mono">Retail</div></div>
+      <div class="bar scalp"><div class="fill" id="s9fill"></div><div class="lbl mono">Scalper price</div></div>
+    </div>
+    <div class="big r words" id="s9b">Someone who pays it.</div>
+  </section>
+
+  <!-- 10 equations -->
+  <section class="scene" id="s10">
+    <div class="eq" id="e1"><span class="k">No buyer</span><span class="a">→</span><span class="k">no profit</span></div>
+    <div class="eq" id="e2"><span class="k">No profit</span><span class="a">→</span><span class="k hl">no scalper</span></div>
+  </section>
+
+  <!-- 11 dates + rules -->
+  <section class="scene" id="s11">
+    <div class="dates">
+      <div class="date"><span class="pill mono">6 Nov</span>Delta Reign drops.</div>
+      <div class="date"><span class="pill ghost mono">6–8 Nov · KL</span>TCGKL Convention.</div>
+    </div>
+    <div class="rules">
+      <div class="mid">Buy to open.</div>
+      <div class="mid">Buy to keep.</div>
+      <div class="mid y">Never pay a flipper.</div>
+    </div>
+  </section>
+
+  <!-- 12 cta -->
+  <section class="scene" id="s12">
+    <div class="huge y" style="font-size:160px" id="c1">COLLECTOR</div>
+    <div class="mid d" id="c2">not</div>
+    <div class="huge r" style="font-size:160px; position:relative" id="c3">SCALPER<i class="strike" id="c3s" style="position:absolute;left:-10px;right:-10px;top:48%;height:16px;background:var(--ink);border-radius:8px;transform-origin:left"></i></div>
+    <div class="pill mono" id="c4" style="font-size:30px;margin-top:30px">Comment COLLECTOR if you’re with us</div>
+    <div class="body" id="c5">Send this to one Malaysian collector.</div>
+  </section>
+
+  <div class="brand mono">MzViral</div>
+  <div class="flash" id="flash"></div>
+</div>
+
+<script src="assets/gsap.min.js"></script>
+<script>
+const TOTAL = 46;
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+// wrap words for staggered reveals
+$$(".words").forEach(el => {
+  el.innerHTML = el.textContent.split(" ").map(w => `<span class="w">${w} </span>`).join("");
+});
+
+const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+// audio cues, read by audio.py: [time, kind]
+window.CUES = [];
+const cue = (t, kind) => window.CUES.push([+t.toFixed(3), kind]);
+
+function scene(id, start, end) {
+  const el = $(id);
+  tl.set(el, { visibility: "visible", opacity: 1, y: 0 }, start);
+  tl.fromTo("#flash", { opacity: .12 }, { opacity: 0, duration: .25, ease: "power1.out" }, start);
+  cue(start, "whoosh");
+  if (end < TOTAL) tl.to(el, { opacity: 0, y: -40, duration: .22, ease: "power2.in" }, end - .22);
+  tl.set(el, { visibility: end < TOTAL ? "hidden" : "visible" }, end);
+}
+const rise = (t, at, extra = {}) =>
+  tl.fromTo(t, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .5, ...extra }, at);
+const words = (sel, at, stagger = .07) =>
+  tl.fromTo(`${sel} .w`, { opacity: 0, y: 50, rotate: 3 }, { opacity: 1, y: 0, rotate: 0, duration: .4, stagger }, at);
+const glow = (yellow, red, at) =>
+  tl.to("#glowY", { opacity: yellow, duration: .6 }, at).to("#glowR", { opacity: red, duration: .6 }, at);
+
+// 1 — hook (0–3.4)
+scene("#s1", 0, 3.4);
+glow(.9, .3, 0);
+rise("#s1 .pill", 0);
+words("#s1 .big:nth-of-type(2)", .05, .05);
+tl.fromTo("#s1empty", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: .35, ease: "back.out(2)" }, .45); cue(.45, "hit");
+words("#s1 .big:nth-of-type(4)", .7, .06);
+tl.fromTo("#s1box", { opacity: 0, y: 200, rotate: -6 }, { opacity: 1, y: 0, rotate: 0, duration: .6, ease: "back.out(1.6)" }, .8);
+tl.fromTo("#s1stamp", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: .22, ease: "power4.in" }, 1.75); cue(1.97, "stamp");
+tl.fromTo("#s1box", { x: -14 }, { x: 0, duration: .4, ease: "elastic.out(1,.3)" }, 1.97);
+
+// 2 — not cards (3.4–5.8)
+scene("#s2", 3.4, 5.8);
+rise("#s2a", 3.45);
+tl.fromTo("#s2b", { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .4, ease: "back.out(2)" }, 4.0); cue(4.0, "hit");
+tl.fromTo("#s2box", { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: .5 }, 4.15);
+tl.to("#s2box", { rotate: 4, duration: .08, yoyo: true, repeat: 5, ease: "none" }, 4.7);
+
+// 3 — the news (5.8–10.4)
+scene("#s3", 5.8, 10.4);
+glow(.5, .6, 5.8);
+rise("#s3 .pill", 5.85);
+words("#s3 .mid", 5.95, .06);
+rise("#s3 .panel", 6.3);
+$$("#s3 .row").forEach((row, i) => {
+  const at = 7.0 + i * .75;
+  tl.fromTo(row.querySelector(".strike"), { scaleX: 0 }, { scaleX: 1, duration: .3, ease: "power2.inOut" }, at);
+  tl.fromTo(row.querySelector(".x"), { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: .25, ease: "back.out(3)" }, at + .2);
+  tl.to(row.querySelector("span"), { opacity: .45, duration: .3 }, at + .1);
+  cue(at + .2, "tick");
+});
+rise("#s3 .foot", 9.3);
+
+// 4 — why (10.4–14.2)
+scene("#s4", 10.4, 14.2);
+glow(.8, .2, 10.4);
+words("#s4 .big", 10.45, .06);
+$$("#s4 .step").forEach((s, i) => {
+  const at = 11.3 + i * .6;
+  tl.fromTo(s, { opacity: 0, x: i % 2 ? 120 : -120 }, { opacity: 1, x: 0, duration: .45, ease: "back.out(1.4)" }, at);
+  cue(at, "pop");
+});
+tl.fromTo("#s4 .arrow", { opacity: 0 }, { opacity: 1, duration: .2, stagger: .6 }, 11.6);
+tl.to("#s4 .step:last-child", { borderColor: "#FFCB05", scale: 1.05, duration: .3 }, 13.0);
+
+// 5 — government ID (14.2–18.4)
+scene("#s5", 14.2, 18.4);
+rise("#s5 .pill", 14.25);
+tl.fromTo("#s5id", { opacity: 0, scale: .8, rotate: -4 }, { opacity: 1, scale: 1, rotate: -2, duration: .55, ease: "back.out(1.5)" }, 14.35);
+tl.fromTo("#s5id .corner", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: .3, stagger: .05 }, 14.7);
+words("#s5 .mid", 15.0, .055); cue(15.0, "scan");
+rise("#s5 .foot", 16.6);
+
+// 6 — 10 billion (18.4–23.0)
+scene("#s6", 18.4, 23.0);
+glow(1, 0, 18.4);
+rise("#s6 .foot", 18.45);
+rise("#count", 18.5);
+for (let i = 0; i < 14; i++) cue(18.6 + i * i * .0115, "tick");
+rise("#s6 .mid:not(.words)", 19.2);
+tl.fromTo("#s6shelf i", { scaleX: 0 }, { scaleX: 1, duration: .5, stagger: .12, ease: "power2.out" }, 20.6);
+words("#s6b", 21.0, .07);
+
+// 7 — Japan vs Malaysia (23.0–27.0)
+scene("#s7", 23.0, 27.0);
+glow(.3, .9, 23.0);
+rise("#s7 .jp", 23.05);
+tl.fromTo("#s7 .jp li", { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .3, stagger: .18, ease: "back.out(2)" }, 23.5);
+rise("#s7 .my", 24.4);
+tl.fromTo("#s7 .none", { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: .3, ease: "power4.in" }, 25.0); cue(25.3, "stamp");
+
+// 8 — US (27.0–30.6)
+scene("#s8", 27.0, 30.6);
+glow(1, 0, 27.0);
+words("#s8 .big", 27.05, .08);
+tl.fromTo("#s8us", { opacity: 0, scale: 3 }, { opacity: 1, scale: 1, duration: .3, ease: "power4.in" }, 28.3); cue(28.6, "boom");
+tl.fromTo("#s8ring", { opacity: .9, scale: .6 }, { opacity: 0, scale: 3.2, duration: .9, ease: "power2.out" }, 28.6);
+tl.to("#s8us", { scale: 1.06, duration: 1.6, ease: "sine.inOut" }, 28.9);
+
+// 9 — the bars (30.6–35.2)
+scene("#s9", 30.6, 35.2);
+glow(.2, .9, 30.6);
+words("#s9 .mid", 30.65, .06);
+tl.fromTo("#s9 .retail", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .4 }, 31.4);
+tl.fromTo("#s9 .scalp", { opacity: 0 }, { opacity: 1, duration: .2 }, 31.8);
+tl.fromTo("#s9fill", { scaleY: .3 }, { scaleY: 1, duration: 1.0, ease: "power2.inOut" }, 31.8); cue(31.8, "rise");
+words("#s9b", 33.1, .08); cue(33.1, "hit");
+
+// 10 — equations (35.2–38.8)
+scene("#s10", 35.2, 38.8);
+glow(.7, .3, 35.2);
+tl.fromTo("#e1 > *", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .35, stagger: .25 }, 35.3); cue(35.3, "pop");
+tl.fromTo("#e2 > *", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .35, stagger: .25 }, 36.5); cue(36.5, "pop");
+tl.fromTo("#e2 .hl", { scale: 1 }, { scale: 1.12, duration: .25, yoyo: true, repeat: 1 }, 37.3); cue(37.3, "hit");
+
+// 11 — dates + rules (38.8–42.8)
+scene("#s11", 38.8, 42.8);
+tl.fromTo("#s11 .date", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: .45, stagger: .5 }, 38.85);
+tl.fromTo("#s11 .rules > *", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: .4, stagger: .55 }, 40.1);
+cue(40.1, "pop"); cue(40.65, "pop"); cue(41.2, "hit");
+
+// 12 — CTA (42.8–46)
+scene("#s12", 42.8, TOTAL);
+glow(1, .4, 42.8);
+tl.fromTo("#c1", { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: .35, ease: "back.out(2)" }, 42.85); cue(42.85, "hit");
+rise("#c2", 43.2);
+rise("#c3", 43.35);
+tl.fromTo("#c3s", { scaleX: 0 }, { scaleX: 1, duration: .3, ease: "power2.inOut" }, 43.8); cue(43.8, "stamp");
+rise("#c4", 44.3, { ease: "back.out(2)" });
+rise("#c5", 44.8);
+tl.to("#c4", { scale: 1.05, duration: .4, yoyo: true, repeat: 1, ease: "sine.inOut" }, 45.1);
+
+// per-frame things that depend on t directly
+const bg = $("#bg").getContext("2d");
+const rand = i => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const clamp = v => Math.max(0, Math.min(1, v));
+function frame(t) {
+  bg.fillStyle = "#070A14"; bg.fillRect(0, 0, 1080, 1920);
+  bg.strokeStyle = "rgba(255,255,255,0.035)"; bg.lineWidth = 2;
+  const off = (t * 18) % 120;
+  for (let x = -120 + off; x < 1080; x += 120) { bg.beginPath(); bg.moveTo(x, 0); bg.lineTo(x, 1920); bg.stroke(); }
+  for (let y = -120 + off; y < 1920; y += 120) { bg.beginPath(); bg.moveTo(0, y); bg.lineTo(1080, y); bg.stroke(); }
+  for (let i = 0; i < 60; i++) {
+    const x = rand(i) * 1080 + Math.sin(t * .6 + i) * 30;
+    const y = (rand(i + 99) * 2100 - t * (20 + rand(i + 7) * 50)) % 2100;
+    const yy = y < 0 ? y + 2100 : y;
+    bg.fillStyle = `rgba(255,203,5,${.08 + rand(i + 3) * .25})`;
+    bg.beginPath(); bg.arc(x, yy - 90, 2 + rand(i + 5) * 4, 0, Math.PI * 2); bg.fill();
+  }
+  const p = clamp((t - 18.6) / 2.3), e = 1 - Math.pow(1 - p, 3);
+  $("#count").textContent = Math.round(e * 1e10).toLocaleString("en-US");
+  $("#s5scan").style.top = (20 + ((t - 14.4) * 260) % 360) + "px";
+}
+
+window.__seek = t => { tl.seek(t, false); frame(t); };
+window.__total = TOTAL;
+window.__ready = document.fonts.ready.then(() => { window.__seek(0); return true; });
+if (!navigator.webdriver) { const t0 = performance.now(); (function loop() { window.__seek(((performance.now() - t0) / 1000) % TOTAL); requestAnimationFrame(loop); })(); }
+</script>
+</body>
+</html>
