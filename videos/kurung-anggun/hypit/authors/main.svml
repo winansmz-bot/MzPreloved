@@ -1,0 +1,332 @@
+<?svml using="@hypit/markup@1"?>
+<svml>
+  <import as="time" from="@hypit/timeline-author@1"/>
+  <import as="space" from="@hypit/spatial@1"/>
+  <import as="asset" from="@hypit/media@1"/>
+  <import as="media" from="@hypit/media@1"/>
+  <import as="mediaop" from="@hypit/media-operations@1"/>
+  <import as="fonts" from="@hypit/fontsource@1"/>
+  <import as="visual" from="@hypit/visual-track@1"/>
+  <import as="audio" from="@hypit/audio-track@1"/>
+  <import as="typo" from="@hypit/text-fine@1"/>
+  <import as="film" from="@hypit/film@1"/>
+  <import as="html" from="@hypit/html-video@1"/>
+  <import as="look" source="../recipes/look.svs"/>
+
+  <!-- Time: 30 fps, 24.5 s. Eight shots, one idea each; text lands a beat after each cut. -->
+  <time:Clock id="clock" frame-rate="30"/>
+  <time:Timeline id="film" clock={clock} end="735f">
+    <time:Window id="hook" from="start" until="96f"/>
+    <time:Window id="hook-eyebrow" from="0f" until="96f"/>
+    <time:Window id="hook-line" from="5f" until="96f"/>
+    <time:Window id="songket" from="96f" until="186f"/>
+    <time:Window id="songket-title" from="100f" until="186f"/>
+    <time:Window id="songket-sub" from="110f" until="186f"/>
+    <time:Window id="zip" from="186f" until="276f"/>
+    <time:Window id="zip-title" from="198f" until="276f"/>
+    <time:Window id="zip-sub" from="208f" until="276f"/>
+    <time:Window id="bunga" from="276f" until="348f"/>
+    <time:Window id="bunga-title" from="282f" until="348f"/>
+    <time:Window id="bunga-sub" from="291f" until="348f"/>
+    <time:Window id="comfort" from="348f" until="444f"/>
+    <time:Window id="comfort-front" from="348f" until="375f"/>
+    <time:Window id="comfort-side" from="360f" until="444f"/>
+    <time:Window id="comfort-1" from="357f" until="444f"/>
+    <time:Window id="comfort-2" from="372f" until="444f"/>
+    <time:Window id="comfort-3" from="387f" until="444f"/>
+    <time:Window id="comfort-sum" from="405f" until="444f"/>
+    <time:Window id="sizes" from="444f" until="528f"/>
+    <time:Window id="sizes-chips" from="453f" until="528f"/>
+    <time:Window id="sizes-facts" from="470f" until="528f"/>
+    <time:Window id="colours" from="528f" until="624f"/>
+    <time:Window id="colours-maroon" from="534f" until="624f"/>
+    <time:Window id="colours-navy" from="548f" until="624f"/>
+    <time:Window id="colours-black" from="561f" until="624f"/>
+    <time:Window id="outro" from="624f" until="end"/>
+    <time:Window id="end-name" from="627f" until="end"/>
+    <time:Window id="end-tag" from="647f" until="end"/>
+    <time:Window id="end-cta" from="660f" until="end"/>
+
+    <!-- ASMR sound: one close-mic sound per visible action, over a quiet room tone -->
+    <time:Window id="snd-room" from="start" until="660f"/>
+    <time:Window id="snd-steps" from="3f" for="60f"/>
+    <time:Window id="snd-rustle-b" from="98f" for="60f"/>
+    <time:Window id="snd-zip" from="198f" for="45f"/>
+    <time:Window id="snd-brooch" from="249f" for="18f"/>
+    <time:Window id="snd-tap-bunga" from="287f" for="18f"/>
+    <time:Window id="snd-swish" from="350f" for="45f"/>
+    <time:Window id="snd-rustle-a" from="393f" for="60f"/>
+    <time:Window id="snd-tap-size1" from="459f" for="18f"/>
+    <time:Window id="snd-tap-size2" from="486f" for="18f"/>
+    <time:Window id="snd-swish-2" from="528f" for="45f"/>
+    <time:Window id="snd-tap-colour" from="585f" for="18f"/>
+    <time:Window id="snd-steps-out" from="626f" for="60f"/>
+  </time:Timeline>
+
+  <!-- Space: 9:16; every word sits inside the 168–1330 px band clear of app UI -->
+  <space:Canvas id="canvas" width="1080" height="1920"/>
+  <space:Frame id="full" within={canvas.bounds} left="0%" top="0%" right="100%" bottom="100%"/>
+  <space:Extent id="bg-size" width="1080" height="1920"/>
+  <space:Extent id="cut34-size" width="780" height="2133"/>
+  <space:Extent id="cutside-size" width="783" height="2133"/>
+  <space:Extent id="songket-size" width="1368" height="804"/>
+  <space:Extent id="brooch-size" width="636" height="774"/>
+  <space:Extent id="bunga-size" width="732" height="768"/>
+
+  <space:Frame id="fig-right" within={canvas.bounds} left="400px" top="250px" right="1040px" bottom="1810px"/>
+  <space:Frame id="fig-left" within={canvas.bounds} left="40px" top="250px" right="640px" bottom="1810px"/>
+  <space:Frame id="fig-end" within={canvas.bounds} left="0px" top="260px" right="560px" bottom="1800px"/>
+  <space:Frame id="card" within={canvas.bounds} left="70px" top="560px" right="1010px" bottom="1560px"/>
+  <space:Frame id="col-1" within={canvas.bounds} left="30px" top="440px" right="370px" bottom="1320px"/>
+  <space:Frame id="col-2" within={canvas.bounds} left="370px" top="440px" right="710px" bottom="1320px"/>
+  <space:Frame id="col-3" within={canvas.bounds} left="710px" top="440px" right="1050px" bottom="1320px"/>
+
+  <space:Frame id="t-hook-eyebrow" within={canvas.bounds} left="70px" top="330px" right="560px" bottom="430px"/>
+  <space:Frame id="t-hook-line" within={canvas.bounds} left="70px" top="440px" right="560px" bottom="900px"/>
+  <space:Frame id="t-title" within={canvas.bounds} left="80px" top="290px" right="1000px" bottom="400px"/>
+  <space:Frame id="t-sub" within={canvas.bounds} left="80px" top="405px" right="1000px" bottom="470px"/>
+  <space:Frame id="t-cf-1" within={canvas.bounds} left="620px" top="360px" right="1040px" bottom="520px"/>
+  <space:Frame id="t-cf-2" within={canvas.bounds} left="620px" top="560px" right="1040px" bottom="780px"/>
+  <space:Frame id="t-cf-3" within={canvas.bounds} left="620px" top="820px" right="1040px" bottom="1040px"/>
+  <space:Frame id="t-cf-sum" within={canvas.bounds} left="620px" top="1080px" right="1040px" bottom="1160px"/>
+  <space:Frame id="t-sz-eyebrow" within={canvas.bounds} left="80px" top="400px" right="1000px" bottom="460px"/>
+  <space:Frame id="t-sz-chips" within={canvas.bounds} left="80px" top="500px" right="1000px" bottom="860px"/>
+  <space:Frame id="t-sz-facts" within={canvas.bounds} left="80px" top="900px" right="1000px" bottom="1060px"/>
+  <space:Frame id="t-cl-title" within={canvas.bounds} left="80px" top="250px" right="1000px" bottom="360px"/>
+  <space:Frame id="t-cl-1" within={canvas.bounds} left="30px" top="1330px" right="370px" bottom="1390px"/>
+  <space:Frame id="t-cl-2" within={canvas.bounds} left="370px" top="1330px" right="710px" bottom="1390px"/>
+  <space:Frame id="t-cl-3" within={canvas.bounds} left="710px" top="1330px" right="1050px" bottom="1390px"/>
+  <space:Frame id="t-end-name" within={canvas.bounds} left="560px" top="320px" right="1050px" bottom="640px"/>
+  <space:Frame id="t-end-tag" within={canvas.bounds} left="560px" top="660px" right="1050px" bottom="1000px"/>
+  <space:Frame id="t-end-cta" within={canvas.bounds} left="560px" top="1120px" right="1050px" bottom="1260px"/>
+
+  <!-- Material: recoloured character sheets, cut out; drawn backgrounds; ElevenLabs sound effects -->
+  <asset:Image id="bg-arch-right" src="../assets/img/bg-arch-right.png"/>
+  <asset:Image id="bg-arch-left" src="../assets/img/bg-arch-left.png"/>
+  <asset:Image id="bg-arch-end" src="../assets/img/bg-arch-end.png"/>
+  <asset:Image id="bg-blush" src="../assets/img/bg-blush.png"/>
+  <asset:Image id="bg-dark" src="../assets/img/bg-maroon-dark.png"/>
+  <asset:Image id="bg-maroon" src="../assets/img/bg-maroon.png"/>
+  <asset:Image id="maroon-34" src="../assets/img/cut-maroon-34.png"/>
+  <asset:Image id="maroon-side" src="../assets/img/cut-maroon-side.png"/>
+  <asset:Image id="navy-34" src="../assets/img/cut-navy-34.png"/>
+  <asset:Image id="black-34" src="../assets/img/cut-black-34.png"/>
+  <asset:Image id="songket-img" src="../assets/img/detail-songket.png"/>
+  <asset:Image id="brooch-img" src="../assets/img/detail-brooch.png"/>
+  <asset:Image id="bunga-img" src="../assets/img/detail-bunga.png"/>
+
+  <asset:Audio id="room" src="../assets/sfx/room.mp3"/>
+  <asset:Audio id="steps" src="../assets/sfx/steps.mp3"/>
+  <asset:Audio id="rustle-a" src="../assets/sfx/rustle-a.mp3"/>
+  <asset:Audio id="rustle-b" src="../assets/sfx/rustle-b.mp3"/>
+  <asset:Audio id="zipper" src="../assets/sfx/zip.mp3"/>
+  <asset:Audio id="tap-a" src="../assets/sfx/tap-a.mp3"/>
+  <asset:Audio id="tap-b" src="../assets/sfx/tap-b.mp3"/>
+  <asset:Audio id="swish" src="../assets/sfx/swish.mp3"/>
+  <mediaop:Normalize id="room-media" source={room} clock={clock} video="none" audio="default" span-authority="audio"/>
+  <mediaop:Normalize id="steps-media" source={steps} clock={clock} video="none" audio="default" span-authority="audio"/>
+  <mediaop:Normalize id="rustle-a-media" source={rustle-a} clock={clock} video="none" audio="default" span-authority="audio"/>
+  <mediaop:Normalize id="rustle-b-media" source={rustle-b} clock={clock} video="none" audio="default" span-authority="audio"/>
+  <mediaop:Normalize id="zipper-media" source={zipper} clock={clock} video="none" audio="default" span-authority="audio"/>
+  <mediaop:Normalize id="tap-a-media" source={tap-a} clock={clock} video="none" audio="default" span-authority="audio"/>
+  <mediaop:Normalize id="tap-b-media" source={tap-b} clock={clock} video="none" audio="default" span-authority="audio"/>
+  <mediaop:Normalize id="swish-media" source={swish} clock={clock} video="none" audio="default" span-authority="audio"/>
+
+  <!-- Motion -->
+  <visual:Motion id="slow-push">
+    <visual:Pose at="start" scale="1" origin-x="0.5" origin-y="0.3"/>
+    <visual:Pose at="end" scale="1.07" origin-x="0.5" origin-y="0.3"/>
+  </visual:Motion>
+  <visual:Motion id="card-drift">
+    <visual:Pose at="start" scale="1"/>
+    <visual:Pose at="end" scale="1.05"/>
+  </visual:Motion>
+  <visual:Motion id="settle">
+    <visual:Pose at="start" scale="1.06" rotate="-2" easing="ease-out"/>
+    <visual:Pose at="end" scale="1" rotate="0"/>
+  </visual:Motion>
+  <visual:Motion id="fade-out">
+    <visual:Pose at="start" opacity="1"/>
+    <visual:Pose at="12f" opacity="1" easing="ease-in-out"/>
+    <visual:Pose at="end" opacity="0"/>
+  </visual:Motion>
+  <visual:Motion id="fade-in">
+    <visual:Pose at="start" opacity="0" x="-20" easing="ease-in-out"/>
+    <visual:Pose at="15f" opacity="1" x="0"/>
+    <visual:Pose at="end" opacity="1" x="0"/>
+  </visual:Motion>
+  <visual:Motion id="rise-in">
+    <visual:Pose at="start" opacity="0" y="60" easing="ease-out"/>
+    <visual:Pose at="14f" opacity="1" y="0"/>
+    <visual:Pose at="end" opacity="1" y="0"/>
+  </visual:Motion>
+  <visual:Motion id="end-settle">
+    <visual:Pose at="start" scale="1.05" origin-x="0.5" origin-y="0.3" easing="ease-out"/>
+    <visual:Pose at="end" scale="1" origin-x="0.5" origin-y="0.3"/>
+  </visual:Motion>
+  <typo:Motion id="text-rise">
+    <typo:ItemKeyframe at="0" y="30" opacity="0" easing="ease-out"/>
+    <typo:ItemKeyframe at="12" y="0" opacity="1"/>
+  </typo:Motion>
+  <typo:Motion id="text-slide">
+    <typo:ItemKeyframe at="0" x="40" opacity="0" easing="ease-out"/>
+    <typo:ItemKeyframe at="10" x="0" opacity="1"/>
+  </typo:Motion>
+  <typo:Motion id="chips-pop">
+    <typo:ItemKeyframe at="0" opacity="1"/>
+    <typo:ItemKeyframe at="30" opacity="1"/>
+    <typo:Sequence id="chips" unit="word" start-index="0" end-index="6" duration-frames="9" stagger-frames="3">
+      <typo:Keyframe at="0" opacity="0" scale="0.85"/>
+      <typo:Keyframe at="1" opacity="1" scale="1"/>
+    </typo:Sequence>
+  </typo:Motion>
+
+  <!-- Type -->
+  <fonts:Face id="playfair" package="@fontsource-variable/playfair-display" weight="700" style="normal"/>
+  <fonts:Face id="playfair-regular" package="@fontsource-variable/playfair-display" weight="400" style="normal"/>
+  <fonts:Face id="lato" package="@fontsource/lato" weight="400" style="normal"/>
+  <fonts:Face id="lato-bold" package="@fontsource/lato" weight="700" style="normal"/>
+  <fonts:Face id="vibes" package="@fontsource/great-vibes" weight="400" style="normal"/>
+
+  <typo:Style id="hook-title" recipe={look.text.hook} font={playfair}><typo:Fill color="#5e1622"/></typo:Style>
+  <typo:Style id="eyebrow-maroon" recipe={look.text.eyebrow} font={lato-bold}><typo:Fill color="#8a4a55"/></typo:Style>
+  <typo:Style id="title-light" recipe={look.text.title} font={playfair}><typo:Fill color="#f4ecee"/></typo:Style>
+  <typo:Style id="sub-light" recipe={look.text.sub} font={lato}><typo:Fill color="#e6d3d6"/></typo:Style>
+  <typo:Style id="cf-key" recipe={look.text.key} font={playfair}><typo:Fill color="#5e1622"/></typo:Style>
+  <typo:Style id="cf-val" recipe={look.text.val} font={lato}><typo:Fill color="#7b4650"/></typo:Style>
+  <typo:Style id="cf-sum" recipe={look.text.sum} font={lato-bold}><typo:Fill color="#5e1622"/></typo:Style>
+  <typo:Style id="sz-eyebrow" recipe={look.text.label} font={lato-bold}><typo:Fill color="#e6c9ce"/></typo:Style>
+  <typo:Style id="sz-chip" recipe={look.text.chip} font={playfair}>
+    <typo:Fill color="#f6f1f2"/>
+    <typo:Box target="word" continuity="isolated" padding="18 30" radius="16" border-color="#e9e7ec" border-width="3"/>
+  </typo:Style>
+  <typo:Style id="sz-fact" recipe={look.text.fact} font={lato}><typo:Fill color="#f6f1f2"/></typo:Style>
+  <typo:Style id="sz-fact-bold" recipe={look.text.factbold} font={lato-bold}><typo:Fill color="#f6f1f2"/></typo:Style>
+  <typo:Style id="cl-title" recipe={look.text.coltitle} font={playfair}><typo:Fill color="#5e1622"/></typo:Style>
+  <typo:Style id="cl-name" recipe={look.text.colname} font={lato-bold}><typo:Fill color="#4a2a30"/></typo:Style>
+  <typo:Style id="end-name" recipe={look.text.endname} font={playfair}><typo:Fill color="#5e1622"/></typo:Style>
+  <typo:Style id="end-script" recipe={look.text.endscript} font={vibes}><typo:Fill color="#5e1622"/></typo:Style>
+  <typo:Style id="end-kebaya" recipe={look.text.endkebaya} font={playfair-regular}><typo:Fill color="#5e1622"/></typo:Style>
+  <typo:Style id="end-tag" recipe={look.text.endtag} font={lato-bold}><typo:Fill color="#7b4650"/></typo:Style>
+  <typo:Style id="end-badge" recipe={look.text.endbadge} font={lato}><typo:Fill color="#4a2a30"/></typo:Style>
+  <typo:Style id="end-cta" recipe={look.text.cta} font={lato-bold}>
+    <typo:Fill color="#ffffff"/>
+    <typo:Box target="frame" color="#5e1622" radius="20"/>
+  </typo:Style>
+
+  <!-- Picture -->
+  <visual:Track id="backdrop" timeline={film.timeline}>
+    <visual:Clip id="hook-bg" image={bg-arch-right} extent={bg-size} during={film.hook} frame={full} z="0" fit="cover"/>
+    <visual:Clip id="songket-bg" image={bg-dark} extent={bg-size} during={film.songket} frame={full} z="0" fit="cover"/>
+    <visual:Clip id="zip-bg" image={bg-dark} extent={bg-size} during={film.zip} frame={full} z="0" fit="cover"/>
+    <visual:Clip id="bunga-bg" image={bg-dark} extent={bg-size} during={film.bunga} frame={full} z="0" fit="cover"/>
+    <visual:Clip id="comfort-bg" image={bg-arch-left} extent={bg-size} during={film.comfort} frame={full} z="0" fit="cover"/>
+    <visual:Clip id="sizes-bg" image={bg-maroon} extent={bg-size} during={film.sizes} frame={full} z="0" fit="cover"/>
+    <visual:Clip id="colours-bg" image={bg-blush} extent={bg-size} during={film.colours} frame={full} z="0" fit="cover"/>
+    <visual:Clip id="end-bg" image={bg-arch-end} extent={bg-size} during={film.outro} frame={full} z="0" fit="cover"/>
+  </visual:Track>
+  <visual:Track id="picture" timeline={film.timeline}>
+    <visual:Clip id="hook-fig" image={maroon-34} extent={cut34-size} during={film.hook} frame={fig-right} z="10" motion={slow-push}/>
+    <visual:Clip id="songket-card" image={songket-img} extent={songket-size} during={film.songket} frame={card} z="10" frame-y="0" treatment={look.visual.card} motion={card-drift}/>
+    <visual:Clip id="zip-card" image={brooch-img} extent={brooch-size} during={film.zip} frame={card} z="10" frame-y="0" treatment={look.visual.card} motion={card-drift}/>
+    <visual:Clip id="bunga-card" image={bunga-img} extent={bunga-size} during={film.bunga} frame={card} z="10" frame-y="0" treatment={look.visual.card} motion={settle}/>
+    <visual:Clip id="comfort-front" image={maroon-34} extent={cut34-size} during={film.comfort-front} frame={fig-left} z="10" motion={fade-out}/>
+    <visual:Clip id="comfort-side" image={maroon-side} extent={cutside-size} during={film.comfort-side} frame={fig-left} z="11" motion={fade-in}/>
+    <visual:Clip id="colours-maroon" image={maroon-34} extent={cut34-size} during={film.colours-maroon} frame={col-1} z="10" motion={rise-in}/>
+    <visual:Clip id="colours-navy" image={navy-34} extent={cut34-size} during={film.colours-navy} frame={col-2} z="10" motion={rise-in}/>
+    <visual:Clip id="colours-black" image={black-34} extent={cut34-size} during={film.colours-black} frame={col-3} z="10" motion={rise-in}/>
+    <visual:Clip id="end-fig" image={maroon-34} extent={cut34-size} during={film.outro} frame={fig-end} z="10" motion={end-settle}/>
+  </visual:Track>
+
+  <!-- Words -->
+  <typo:Flow id="hook-eyebrow" timeline={film.timeline} during={film.hook-eyebrow} within={t-hook-eyebrow} style={eyebrow-maroon} z="40" motion={text-rise} align="start" block-align="end">Kenduri hujung minggu ni?</typo:Flow>
+  <typo:Flow id="hook-line" timeline={film.timeline} during={film.hook-line} within={t-hook-line} style={hook-title} z="40" motion={text-rise} align="start" block-align="start">Baju yang tak buat rimas.</typo:Flow>
+
+  <typo:Flow id="songket-title" timeline={film.timeline} during={film.songket-title} within={t-title} style={title-light} z="40" motion={text-rise} align="start">Full border songket</typo:Flow>
+  <typo:Flow id="songket-sub" timeline={film.timeline} during={film.songket-sub} within={t-sub} style={sub-light} z="40" motion={text-rise} align="start">Kain berkualiti premium</typo:Flow>
+
+  <typo:Flow id="zip-title" timeline={film.timeline} during={film.zip-title} within={t-title} style={title-light} z="40" motion={text-rise} align="start">Zip di depan</typo:Flow>
+  <typo:Flow id="zip-sub" timeline={film.timeline} during={film.zip-sub} within={t-sub} style={sub-light} z="40" motion={text-rise} align="start">Pakai sendiri, tanpa bantuan.</typo:Flow>
+
+  <typo:Flow id="bunga-title" timeline={film.timeline} during={film.bunga-title} within={t-title} style={title-light} z="40" motion={text-rise} align="start">Bunga tabur klasik</typo:Flow>
+  <typo:Flow id="bunga-sub" timeline={film.timeline} during={film.bunga-sub} within={t-sub} style={sub-light} z="40" motion={text-rise} align="start">Bertabur satu badan</typo:Flow>
+
+  <typo:Flow id="cf-1" timeline={film.timeline} during={film.comfort-1} within={t-cf-1} style={cf-key} z="40" motion={text-slide} align="start" block-align="start">
+    <typo:P id="p2"><typo:Span id="r1">Span di bahu</typo:Span></typo:P><typo:P id="p4" style={cf-val}><typo:Span id="r3">Angkat tangan, salam</typo:Span></typo:P>
+  </typo:Flow>
+  <typo:Flow id="cf-2" timeline={film.timeline} during={film.comfort-2} within={t-cf-2} style={cf-key} z="40" motion={text-slide} align="start" block-align="start">
+    <typo:P id="p6"><typo:Span id="r5">Getah separuh di pinggang</typo:Span></typo:P><typo:P id="p8" style={cf-val}><typo:Span id="r7">Duduk, makan, tak ketat</typo:Span></typo:P>
+  </typo:Flow>
+  <typo:Flow id="cf-3" timeline={film.timeline} during={film.comfort-3} within={t-cf-3} style={cf-key} z="40" motion={text-slide} align="start" block-align="start">
+    <typo:P id="p10"><typo:Span id="r9">Lengan selesa &amp; sopan</typo:Span></typo:P><typo:P id="p12" style={cf-val}><typo:Span id="r11">Labuh 37 inci</typo:Span></typo:P>
+  </typo:Flow>
+  <typo:Flow id="cf-sum" timeline={film.timeline} during={film.comfort-sum} within={t-cf-sum} style={cf-sum} z="40" motion={text-rise} align="start">Selesa sepanjang hari.</typo:Flow>
+
+  <typo:Flow id="sz-eyebrow" timeline={film.timeline} during={film.sizes} within={t-sz-eyebrow} style={sz-eyebrow} z="40" motion={text-rise} align="start">JADUAL SAIZ</typo:Flow>
+  <typo:Flow id="sz-chips" timeline={film.timeline} during={film.sizes-chips} within={t-sz-chips} style={sz-chip} z="40" motion={chips-pop} align="start" block-align="start">XS S M L XL XXL</typo:Flow>
+  <typo:Flow id="sz-facts" timeline={film.timeline} during={film.sizes-facts} within={t-sz-facts} style={sz-fact} z="40" motion={text-rise} align="start" block-align="start">
+    <typo:P id="p15"><typo:Span id="r13">Dada </typo:Span><typo:Span id="r14" style={sz-fact-bold}>36 – 46 inci</typo:Span></typo:P>
+    <typo:P id="p18"><typo:Span id="r16">Pinggang kain </typo:Span><typo:Span id="r17" style={sz-fact-bold}>24 – 34 inci</typo:Span></typo:P>
+  </typo:Flow>
+
+  <typo:Flow id="cl-title" timeline={film.timeline} during={film.colours} within={t-cl-title} style={cl-title} z="40" motion={text-rise} align="start">3 warna pilihan</typo:Flow>
+  <typo:Flow id="cl-1" timeline={film.timeline} during={film.colours-maroon} within={t-cl-1} style={cl-name} z="40" motion={text-rise}>● Maroon</typo:Flow>
+  <typo:Flow id="cl-2" timeline={film.timeline} during={film.colours-navy} within={t-cl-2} style={cl-name} z="40" motion={text-rise}>● Navy Blue</typo:Flow>
+  <typo:Flow id="cl-3" timeline={film.timeline} during={film.colours-black} within={t-cl-3} style={cl-name} z="40" motion={text-rise}>● Black</typo:Flow>
+
+  <typo:Flow id="end-name" timeline={film.timeline} during={film.end-name} within={t-end-name} style={end-name} z="40" motion={text-rise} align="start" block-align="start">
+    <typo:P id="p20"><typo:Span id="r19">Kurung</typo:Span></typo:P><typo:P id="p22" style={end-script}><typo:Span id="r21">Anggun</typo:Span></typo:P><typo:P id="p24" style={end-kebaya}><typo:Span id="r23">(Kebaya)</typo:Span></typo:P>
+  </typo:Flow>
+  <typo:Flow id="end-tag" timeline={film.timeline} during={film.end-tag} within={t-end-tag} style={end-tag} z="40" motion={text-rise} align="start" block-align="start">
+    <typo:P id="p26"><typo:Span id="r25">Tampil anggun, penuh sopan.</typo:Span></typo:P>
+    <typo:P id="p28" style={end-badge}><typo:Span id="r27">Penghantaran seluruh Malaysia</typo:Span></typo:P>
+    <typo:P id="p30" style={end-badge}><typo:Span id="r29">Kualiti terjamin</typo:Span></typo:P>
+  </typo:Flow>
+  <typo:Flow id="end-cta" timeline={film.timeline} during={film.end-cta} within={t-end-cta} style={end-cta} z="40" motion={text-rise}>Tekan beg kuning ↓</typo:Flow>
+
+  <!-- Sound -->
+  <audio:Track id="mix" timeline={film.timeline}>
+    <audio:Clip id="room-tone" source={room-media.media} during={film.snd-room} gain="0.35" fade-in="9f" fade-out="45f"/>
+    <audio:Clip id="steps-in" source={steps-media.media} during={film.snd-steps}/>
+    <audio:Clip id="songket-rustle" source={rustle-b-media.media} during={film.snd-rustle-b}/>
+    <audio:Clip id="zip-pull" source={zipper-media.media} during={film.snd-zip}/>
+    <audio:Clip id="brooch-tap" source={tap-b-media.media} during={film.snd-brooch} gain="0.9"/>
+    <audio:Clip id="bunga-tap" source={tap-a-media.media} during={film.snd-tap-bunga}/>
+    <audio:Clip id="turn-swish" source={swish-media.media} during={film.snd-swish}/>
+    <audio:Clip id="comfort-rustle" source={rustle-a-media.media} during={film.snd-rustle-a} gain="0.8"/>
+    <audio:Clip id="size-tap-1" source={tap-a-media.media} during={film.snd-tap-size1} gain="0.7"/>
+    <audio:Clip id="size-tap-2" source={tap-b-media.media} during={film.snd-tap-size2} gain="0.7"/>
+    <audio:Clip id="colour-swish" source={swish-media.media} during={film.snd-swish-2} gain="0.8"/>
+    <audio:Clip id="colour-tap" source={tap-a-media.media} during={film.snd-tap-colour} gain="0.6"/>
+    <audio:Clip id="steps-end" source={steps-media.media} during={film.snd-steps-out} gain="0.8"/>
+  </audio:Track>
+
+  <film:Film id="main" canvas={canvas.canvas} timeline={film.timeline} appearance={look.film.main}>
+    <film:Track source={backdrop.visual}/>
+    <film:Track source={picture.visual}/>
+    <film:Track source={hook-eyebrow.visual}/>
+    <film:Track source={hook-line.visual}/>
+    <film:Track source={songket-title.visual}/>
+    <film:Track source={songket-sub.visual}/>
+    <film:Track source={zip-title.visual}/>
+    <film:Track source={zip-sub.visual}/>
+    <film:Track source={bunga-title.visual}/>
+    <film:Track source={bunga-sub.visual}/>
+    <film:Track source={cf-1.visual}/>
+    <film:Track source={cf-2.visual}/>
+    <film:Track source={cf-3.visual}/>
+    <film:Track source={cf-sum.visual}/>
+    <film:Track source={sz-eyebrow.visual}/>
+    <film:Track source={sz-chips.visual}/>
+    <film:Track source={sz-facts.visual}/>
+    <film:Track source={cl-title.visual}/>
+    <film:Track source={cl-1.visual}/>
+    <film:Track source={cl-2.visual}/>
+    <film:Track source={cl-3.visual}/>
+    <film:Track source={end-name.visual}/>
+    <film:Track source={end-tag.visual}/>
+    <film:Track source={end-cta.visual}/>
+    <film:Track source={mix.audio}/>
+  </film:Film>
+  <html:Video id="final" composition={main.composition} timeline={film.timeline}/>
+</svml>
