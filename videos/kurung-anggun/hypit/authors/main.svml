@@ -76,13 +76,15 @@
   <space:Frame id="fig-right" within={canvas.bounds} left="400px" top="250px" right="1040px" bottom="1810px"/>
   <space:Frame id="fig-left" within={canvas.bounds} left="40px" top="250px" right="640px" bottom="1810px"/>
   <space:Frame id="fig-end" within={canvas.bounds} left="0px" top="260px" right="560px" bottom="1800px"/>
-  <space:Frame id="card" within={canvas.bounds} left="70px" top="560px" right="1010px" bottom="1560px"/>
+  <space:Frame id="card-songket" within={canvas.bounds} left="70px" top="560px" right="1010px" bottom="1113px"/>
+  <space:Frame id="card-brooch" within={canvas.bounds} left="190px" top="560px" right="890px" bottom="1412px"/>
+  <space:Frame id="card-bunga" within={canvas.bounds} left="70px" top="560px" right="1010px" bottom="1546px"/>
   <space:Frame id="col-1" within={canvas.bounds} left="30px" top="440px" right="370px" bottom="1320px"/>
   <space:Frame id="col-2" within={canvas.bounds} left="370px" top="440px" right="710px" bottom="1320px"/>
   <space:Frame id="col-3" within={canvas.bounds} left="710px" top="440px" right="1050px" bottom="1320px"/>
 
-  <space:Frame id="t-hook-eyebrow" within={canvas.bounds} left="70px" top="330px" right="560px" bottom="430px"/>
-  <space:Frame id="t-hook-line" within={canvas.bounds} left="70px" top="440px" right="560px" bottom="900px"/>
+  <space:Frame id="t-hook-eyebrow" within={canvas.bounds} left="70px" top="300px" right="600px" bottom="430px"/>
+  <space:Frame id="t-hook-line" within={canvas.bounds} left="70px" top="440px" right="600px" bottom="900px"/>
   <space:Frame id="t-title" within={canvas.bounds} left="80px" top="290px" right="1000px" bottom="400px"/>
   <space:Frame id="t-sub" within={canvas.bounds} left="80px" top="405px" right="1000px" bottom="470px"/>
   <space:Frame id="t-cf-1" within={canvas.bounds} left="620px" top="360px" right="1040px" bottom="520px"/>
@@ -227,9 +229,9 @@
   </visual:Track>
   <visual:Track id="picture" timeline={film.timeline}>
     <visual:Clip id="hook-fig" image={maroon-34} extent={cut34-size} during={film.hook} frame={fig-right} z="10" motion={slow-push}/>
-    <visual:Clip id="songket-card" image={songket-img} extent={songket-size} during={film.songket} frame={card} z="10" frame-y="0" treatment={look.visual.card} motion={card-drift}/>
-    <visual:Clip id="zip-card" image={brooch-img} extent={brooch-size} during={film.zip} frame={card} z="10" frame-y="0" treatment={look.visual.card} motion={card-drift}/>
-    <visual:Clip id="bunga-card" image={bunga-img} extent={bunga-size} during={film.bunga} frame={card} z="10" frame-y="0" treatment={look.visual.card} motion={settle}/>
+    <visual:Clip id="songket-card" image={songket-img} extent={songket-size} during={film.songket} frame={card-songket} z="10" frame-y="0" treatment={look.visual.card} motion={card-drift}/>
+    <visual:Clip id="zip-card" image={brooch-img} extent={brooch-size} during={film.zip} frame={card-brooch} z="10" frame-y="0" treatment={look.visual.card} motion={card-drift}/>
+    <visual:Clip id="bunga-card" image={bunga-img} extent={bunga-size} during={film.bunga} frame={card-bunga} z="10" frame-y="0" treatment={look.visual.card} motion={settle}/>
     <visual:Clip id="comfort-front" image={maroon-34} extent={cut34-size} during={film.comfort-front} frame={fig-left} z="10" motion={fade-out}/>
     <visual:Clip id="comfort-side" image={maroon-side} extent={cutside-size} during={film.comfort-side} frame={fig-left} z="11" motion={fade-in}/>
     <visual:Clip id="colours-maroon" image={maroon-34} extent={cut34-size} during={film.colours-maroon} frame={col-1} z="10" motion={rise-in}/>
@@ -240,7 +242,7 @@
 
   <!-- Words -->
   <typo:Flow id="hook-eyebrow" timeline={film.timeline} during={film.hook-eyebrow} within={t-hook-eyebrow} style={eyebrow-maroon} z="40" motion={text-rise} align="start" block-align="end">Kenduri hujung minggu ni?</typo:Flow>
-  <typo:Flow id="hook-line" timeline={film.timeline} during={film.hook-line} within={t-hook-line} style={hook-title} z="40" motion={text-rise} align="start" block-align="start">Baju yang tak buat rimas.</typo:Flow>
+  <typo:Flow id="hook-line" timeline={film.timeline} during={film.hook-line} within={t-hook-line} style={hook-title} z="40" motion={text-rise} align="start" block-align="start" wrap="none"><typo:P id="hook-p"><typo:Span id="hook-r1">Baju yang</typo:Span><typo:Break/><typo:Span id="hook-r2">tak buat</typo:Span><typo:Break/><typo:Span id="hook-r3">rimas.</typo:Span></typo:P></typo:Flow>
 
   <typo:Flow id="songket-title" timeline={film.timeline} during={film.songket-title} within={t-title} style={title-light} z="40" motion={text-rise} align="start">Full border songket</typo:Flow>
   <typo:Flow id="songket-sub" timeline={film.timeline} during={film.songket-sub} within={t-sub} style={sub-light} z="40" motion={text-rise} align="start">Kain berkualiti premium</typo:Flow>
