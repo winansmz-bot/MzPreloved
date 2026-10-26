@@ -1,0 +1,25 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #4a121d; }
+    #zp-img { position: absolute; left: 70px; top: 560px; width: 940px; height: auto; border: 3px solid #cfcbd3; border-radius: 14px; }
+    #zp-shade { display: none; }
+    #zp-text { position: absolute; left: 80px; right: 80px; top: 300px; display: flex; flex-direction: column; gap: 18px; }
+    #zp-title { font-family: "Playfair Display", serif; font-size: 92px; font-weight: 700; color: #f4ecee; line-height: 1.05; }
+    #zp-sub { font-family: "Lato", sans-serif; font-size: 44px; color: #e6d3d6; line-height: 1.3; }
+  </style>
+  <div id="root" data-composition-id="zip" data-width="1080" data-height="1920">
+    <img id="zp-img" class="clip" data-start="0" data-duration="3" src="assets/img/detail-brooch.png" alt="Silver brooch over the front zip and songket panel" />
+    <div id="zp-shade"></div>
+    <div id="zp-text" class="clip" data-start="0" data-duration="3">
+      <h2 id="zp-title">Zip di depan</h2>
+      <p id="zp-sub">Pakai sendiri, tanpa bantuan.</p>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#zp-img", { scale: 1.0, transformOrigin: "50% 30%" }, { scale: 1.05, duration: 3, ease: "none" }, 0);
+    tl.fromTo("#zp-title", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.4);
+    tl.fromTo("#zp-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.75);
+    window.__timelines["zip"] = tl;
+  </script>
+</template>
