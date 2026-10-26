@@ -1,0 +1,42 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #steps-k {
+      position: absolute; left: 0; right: 0; top: 200px; text-align: center;
+      font-family: var(--font-ui); font-weight: 700; font-size: 32px; letter-spacing: 0.14em; color: #fff;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+    }
+    #steps-t { position: absolute; left: 0; right: 0; top: 250px; text-align: center; font-size: 120px; }
+    #steps-t em { font-size: 150px; }
+    #steps-dots {
+      position: absolute; left: 0; right: 0; top: 1090px; display: flex; justify-content: center; align-items: center;
+    }
+    .sd {
+      width: 100px; height: 100px; border-radius: 50%; background: #fff; color: var(--ink);
+      font: 800 46px/100px var(--font-sans); text-align: center; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+    #sd1 { background: var(--coral); color: #fff; }
+    .sl { width: 90px; height: 6px; background: #fff; transform-origin: 0 50%; }
+  </style>
+  <div id="root" data-composition-id="steps" data-width="1080" data-height="1920">
+    <div id="steps-k" class="clip" data-start="0" data-duration="2.45">CARANYA SENANG JE</div>
+    <h1 id="steps-t" class="serif-title clip" data-start="1.2" data-duration="1.25"><em>3</em> <em>langkah</em></h1>
+    <div id="steps-dots" class="clip" data-start="1.2" data-duration="1.25">
+      <div class="sd" id="sd1">1</div><div class="sl" id="sl1"></div>
+      <div class="sd" id="sd2">2</div><div class="sl" id="sl2"></div>
+      <div class="sd" id="sd3">3</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#steps-k", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.05);
+    tl.fromTo("#steps-t", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, 1.25);
+    tl.fromTo("#sd1", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2.5)" }, 1.25);
+    tl.fromTo("#sl1", { scaleX: 0 }, { scaleX: 1, duration: 0.15 }, 1.4);
+    tl.fromTo("#sd2", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2.5)" }, 1.5);
+    tl.fromTo("#sl2", { scaleX: 0 }, { scaleX: 1, duration: 0.15 }, 1.65);
+    tl.fromTo("#sd3", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2.5)" }, 1.75);
+    tl.to(["#steps-k", "#steps-t", "#steps-dots"], { opacity: 0, duration: 0.15 }, 2.28);
+    window.__timelines["steps"] = tl;
+  </script>
+</template>

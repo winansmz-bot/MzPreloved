@@ -1,0 +1,46 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #brand-box {
+      position: absolute; left: 110px; top: 200px; width: 860px; height: 170px;
+      border: 8px solid var(--coral); border-radius: 6px;
+    }
+    #brand-word {
+      position: absolute; left: 0; right: 0; top: 210px; text-align: center;
+      font-family: var(--font-sans); font-weight: 900; font-size: 128px; letter-spacing: -0.04em;
+      color: #fff; text-shadow: 0 8px 34px rgba(0, 0, 0, 0.45);
+    }
+    #brand-word span { display: inline-block; }
+    #brand-word .f { color: #ff7448; text-shadow: 0 2px 4px rgba(60, 20, 10, 0.6), 0 8px 34px rgba(0, 0, 0, 0.5); }
+    #brand-pills {
+      position: absolute; left: 0; right: 0; top: 1110px; display: flex; justify-content: center; gap: 18px;
+    }
+    .dot { width: 16px; height: 16px; border-radius: 50%; background: #39d36b; display: inline-block; }
+    #pill-os { letter-spacing: 0.08em; }
+    #pill-hg { font-weight: 500; }
+    #pill-hg b { font-weight: 800; }
+  </style>
+  <div id="root" data-composition-id="brand" data-width="1080" data-height="1920">
+    <div id="brand-boxw" class="clip" data-start="0" data-duration="4.28"><div id="brand-box"></div></div>
+    <div id="brand-word" class="clip" data-start="0" data-duration="4.28">
+      <span id="bw-h">Hyper</span><span id="bw-f" class="f">Frames</span>
+    </div>
+    <div id="brand-pills" class="clip" data-start="2.0" data-duration="2.28">
+      <div id="pill-os" class="chip chip-dark"><span class="dot"></span>OPEN SOURCE</div>
+      <div id="pill-hg" class="chip chip-light">dari&nbsp;<b>HeyGen</b></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Outline draws, then collapses as the wordmark lands inside it
+    tl.fromTo("#brand-box", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.45, ease: "power2.inOut" }, 0.05);
+    tl.to("#brand-box", { opacity: 0, scale: 1.08, duration: 0.3, ease: "power2.in" }, 0.85);
+    tl.fromTo("#bw-h", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.6);
+    tl.fromTo("#bw-f", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.75);
+    tl.fromTo("#brand-word", { scale: 1 }, { scale: 0.86, y: -30, duration: 0.5, ease: "power2.inOut" }, 1.95);
+    tl.fromTo("#pill-os", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }, 2.0);
+    tl.fromTo("#pill-hg", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }, 3.25);
+    tl.to(["#brand-word", "#brand-pills"], { opacity: 0, duration: 0.25, ease: "power2.in" }, 4.0);
+    window.__timelines["brand"] = tl;
+  </script>
+</template>

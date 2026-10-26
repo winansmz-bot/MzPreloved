@@ -1,0 +1,129 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    .sp { position: absolute; color: #fff; text-shadow: 0 0 18px rgba(255, 255, 255, 0.8); line-height: 1; }
+    #sp1 { left: 190px; top: 420px; font-size: 90px; }
+    #sp2 { left: 860px; top: 560px; font-size: 70px; }
+    #sp3 { left: 250px; top: 700px; font-size: 50px; }
+    #o-notew { position: absolute; right: 90px; top: 300px; transform: rotate(8deg); }
+    #o-note { font-family: var(--font-serif); font-style: italic; font-weight: 700; font-size: 64px; color: var(--coral-soft); text-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); }
+    #o-t { position: absolute; left: 0; right: 0; top: 200px; text-align: center; font-size: 112px; }
+    #o-card { left: 60px; width: 960px; top: 1010px; height: 160px; padding: 0 30px; display: flex; align-items: center; gap: 22px; }
+    #o-av { width: 96px; height: 96px; border-radius: 50%; background: var(--coral); color: #fff; font-size: 48px; display: flex; align-items: center; justify-content: center; }
+    #o-txt { flex: 1; }
+    #o-txt .s { font-size: 28px; color: #8a7d77; font-weight: 600; }
+    #o-txt .b { font-size: 38px; font-weight: 800; }
+    #o-btn { position: relative; width: 230px; height: 70px; }
+    .btn { position: absolute; inset: 0; border-radius: 999px; font: 800 30px/70px var(--font-ui); text-align: center; color: #fff; }
+    #o-follow { background: var(--coral); }
+    #o-following { background: #1e1816; }
+    #o-curw { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; pointer-events: none; }
+    #o-cur { position: absolute; left: 0; top: 0; width: 46px; height: 46px; }
+    .cf { position: absolute; width: 14px; height: 22px; border-radius: 3px; left: 860px; top: 1090px; }
+  </style>
+  <div id="root" data-composition-id="outro" data-width="1080" data-height="1920">
+    <div id="o-sparks" class="clip" data-start="0" data-duration="1.08">
+      <div class="sp" id="sp1">✦</div><div class="sp" id="sp2">✦</div><div class="sp" id="sp3">✦</div>
+      <div id="o-notew"><div id="o-note">senang!</div></div>
+    </div>
+    <h1 id="o-t" class="serif-title clip" data-start="1.08" data-duration="3.73">Cuba <em>sekarang!</em></h1>
+    <div id="o-cardw" class="clip" data-start="1.08" data-duration="3.73">
+      <div id="o-card" class="card">
+        <div id="o-av">✦</div>
+        <div id="o-txt"><div class="s">Follow untuk lebih banyak</div><div class="b">tips AI</div></div>
+        <div id="o-btn"><div class="btn" id="o-follow">Follow</div><div class="btn" id="o-following">Following ✓</div></div>
+      </div>
+      <div id="o-conf"></div>
+    </div>
+    <div id="o-curw" class="clip" data-start="1.08" data-duration="3.73">
+      <svg id="o-cur" viewBox="0 0 24 24"><path d="M4 2 L4 19 L8.5 15 L11.5 21.5 L14 20.3 L11 14 L17 14 Z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" /></svg>
+    </div>
+    <div id="o-confw" class="clip" data-start="2.4" data-duration="2.41">
+      <div class="cf" id="cf0" style="background:#e8623a"></div>
+      <div class="cf" id="cf1" style="background:#ffb347"></div>
+      <div class="cf" id="cf2" style="background:#1a5cff"></div>
+      <div class="cf" id="cf3" style="background:#22b357"></div>
+      <div class="cf" id="cf4" style="background:#c43bd0"></div>
+      <div class="cf" id="cf5" style="background:#ffffff"></div>
+      <div class="cf" id="cf6" style="background:#e8623a"></div>
+      <div class="cf" id="cf7" style="background:#ffb347"></div>
+      <div class="cf" id="cf8" style="background:#1a5cff"></div>
+      <div class="cf" id="cf9" style="background:#22b357"></div>
+      <div class="cf" id="cf10" style="background:#c43bd0"></div>
+      <div class="cf" id="cf11" style="background:#ffffff"></div>
+      <div class="cf" id="cf12" style="background:#e8623a"></div>
+      <div class="cf" id="cf13" style="background:#ffb347"></div>
+      <div class="cf" id="cf14" style="background:#1a5cff"></div>
+      <div class="cf" id="cf15" style="background:#22b357"></div>
+      <div class="cf" id="cf16" style="background:#c43bd0"></div>
+      <div class="cf" id="cf17" style="background:#ffffff"></div>
+      <div class="cf" id="cf18" style="background:#e8623a"></div>
+      <div class="cf" id="cf19" style="background:#ffb347"></div>
+      <div class="cf" id="cf20" style="background:#1a5cff"></div>
+      <div class="cf" id="cf21" style="background:#22b357"></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    [["#sp1", 0.05], ["#sp2", 0.2], ["#sp3", 0.35]].forEach(([s, t]) =>
+      tl.fromTo(s, { opacity: 0, scale: 0, rotation: -40 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.4, ease: "back.out(2.5)" }, t));
+    tl.fromTo("#o-note", { opacity: 0, clipPath: "inset(0 100% 0 0)" }, { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.4 }, 0.1);
+
+    tl.fromTo("#o-t", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.08);
+    tl.fromTo("#o-card", { opacity: 0, y: 40, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power2.out" }, 1.2);
+    tl.set("#o-following", { opacity: 0 }, 0);
+    tl.set("#o-cur", { x: 980, y: 1500, opacity: 0, transformOrigin: "10% 10%" }, 1.08);
+    tl.to("#o-cur", { opacity: 1, duration: 0.2 }, 1.7);
+    tl.to("#o-cur", { x: 900, y: 1100, duration: 0.6, ease: "power2.inOut" }, 1.75);
+    tl.to("#o-cur", { scale: 0.8, duration: 0.08, yoyo: true, repeat: 1 }, 2.38);
+    tl.fromTo("#o-btn", { scale: 1 }, { scale: 0.9, duration: 0.1, yoyo: true, repeat: 1 }, 2.38);
+    tl.to("#o-follow", { opacity: 0, duration: 0.12 }, 2.45);
+    tl.to("#o-following", { opacity: 1, duration: 0.12 }, 2.45);
+    tl.to("#o-cur", { x: 960, y: 1250, opacity: 0, duration: 0.5 }, 3.0);
+    tl.fromTo("#cf0", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -70, y: -153, rotation: 266, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf0", { y: 107, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf1", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -264, y: -133, rotation: -304, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf1", { y: 127, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf2", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -49, y: -143, rotation: 119, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf2", { y: 117, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf3", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -100, y: -120, rotation: 28, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf3", { y: 140, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf4", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -136, y: -78, rotation: 34, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf4", { y: 182, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf5", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -218, y: -117, rotation: -172, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf5", { y: 143, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf6", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: 79, y: -238, rotation: -337, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf6", { y: 22, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf7", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: 40, y: -212, rotation: -174, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf7", { y: 48, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf8", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -271, y: -135, rotation: -104, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf8", { y: 125, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf9", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -48, y: -238, rotation: 184, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf9", { y: 22, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf10", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -133, y: -263, rotation: -215, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf10", { y: -3, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf11", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -205, y: -141, rotation: -208, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf11", { y: 119, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf12", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -75, y: -232, rotation: -336, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf12", { y: 28, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf13", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: 40, y: -254, rotation: 108, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf13", { y: 6, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf14", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: 94, y: -200, rotation: -79, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf14", { y: 60, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf15", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -26, y: -314, rotation: -30, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf15", { y: -54, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf16", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -137, y: -257, rotation: 315, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf16", { y: 3, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf17", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: 98, y: -121, rotation: -93, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf17", { y: 139, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf18", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: 19, y: -306, rotation: 346, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf18", { y: -46, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf19", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -32, y: -254, rotation: -326, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf19", { y: 6, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf20", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -176, y: -131, rotation: 375, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf20", { y: 129, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    tl.fromTo("#cf21", { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: -119, y: -294, rotation: 31, duration: 0.7, ease: "power3.out" }, 2.42);
+    tl.to("#cf21", { y: -34, opacity: 0, duration: 1.0, ease: "power1.in" }, 3.12);
+    window.__timelines["outro"] = tl;
+  </script>
+</template>

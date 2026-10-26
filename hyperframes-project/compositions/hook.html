@@ -1,0 +1,99 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #hook-title {
+      position: absolute; left: 0; right: 0; top: 200px; text-align: center;
+      font-size: 112px;
+    }
+    #hook-title .line { display: block; }
+    #hook-ul {
+      position: absolute; left: 330px; top: 420px; width: 430px; height: 12px;
+      background: var(--coral); border-radius: 6px; transform-origin: 0 50%;
+    }
+    #hook-chips {
+      position: absolute; left: 0; right: 0; top: 1060px;
+      display: flex; justify-content: center; gap: 28px;
+    }
+    #chip-capcut { position: relative; }
+    #capcut-strike {
+      position: absolute; left: 18px; right: 18px; top: 50%; height: 6px;
+      background: #e23b2e; border-radius: 3px; transform-origin: 0 50%;
+    }
+    #capcut-x {
+      position: absolute; right: -14px; top: -16px; width: 40px; height: 40px; border-radius: 50%;
+      background: #e23b2e; color: #fff; font: 800 26px/40px var(--font-ui); text-align: center;
+    }
+    .ico {
+      width: 44px; height: 44px; border-radius: 12px; display: inline-flex;
+      align-items: center; justify-content: center; font-size: 26px; color: #fff;
+    }
+    #hook-chat { left: 60px; width: 960px; top: 990px; height: 225px; padding: 26px 32px; }
+    .chat-head { font-weight: 700; font-size: 28px; display: flex; gap: 10px; align-items: center; }
+    .bubble-me {
+      position: absolute; right: 30px; top: 70px; background: var(--coral); color: #fff;
+      font-weight: 700; font-size: 30px; padding: 14px 24px; border-radius: 18px;
+    }
+    #hook-reply {
+      position: absolute; left: 32px; top: 150px; display: flex; gap: 14px; align-items: center;
+      font-weight: 700; font-size: 30px;
+    }
+    .file {
+      display: inline-flex; gap: 10px; align-items: center; background: #f1ece8;
+      border-radius: 12px; padding: 8px 16px; font-size: 28px;
+    }
+    .file b { background: #1e1816; color: #fff; border-radius: 6px; font-size: 16px; padding: 4px 7px; }
+    .ok { color: var(--green); }
+    #hook-timerw { position: absolute; right: 70px; top: 950px; transform: rotate(4deg); }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <h1 id="hook-title" class="serif-title clip" data-start="0" data-duration="9.03">
+      <span class="line" id="hook-l1">Saya <em>tak</em> edit</span>
+      <span class="line" id="hook-l2">langsung.</span>
+    </h1>
+    <div id="hook-ulw" class="clip" data-start="0" data-duration="9.03"><div id="hook-ul"></div></div>
+
+    <div id="hook-chips" class="clip" data-start="2.79" data-duration="2.4">
+      <div id="chip-capcut" class="chip chip-light">
+        <span class="ico" style="background:#111">✂</span><span>CapCut</span>
+        <div id="capcut-strike"></div>
+        <div id="capcut-x">×</div>
+      </div>
+      <div id="chip-canva" class="chip chip-light">
+        <span class="ico" style="background:linear-gradient(135deg,#00c4cc,#7d2ae8)">✎</span><span>Canva</span>
+      </div>
+    </div>
+
+    <div id="hook-chatw" class="clip" data-start="6.11" data-duration="2.92">
+      <div id="hook-chat" class="card">
+        <div class="chat-head"><span class="spark">✦</span> Claude</div>
+        <div id="hook-me" class="bubble-me">Tolong edit video saya</div>
+        <div id="hook-reply">Siap! <span class="file"><b>▶</b> video.mp4 <span class="ok">✓</span></span></div>
+      </div>
+      <div id="hook-timerw"><div id="hook-timer" class="chip chip-dark">⏱ beberapa minit</div></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#hook-l1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.1);
+    tl.fromTo("#hook-l2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.3);
+    tl.fromTo("#hook-ul", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, 2.05);
+    // Clear the title while the close-up fills the top of frame
+    tl.to(["#hook-title", "#hook-ul"], { opacity: 0, duration: 0.12 }, 2.67);
+    tl.to(["#hook-title", "#hook-ul"], { opacity: 1, duration: 0.2 }, 4.15);
+    tl.to(["#hook-title", "#hook-ul"], { opacity: 0, duration: 0.3, ease: "power2.in" }, 5.75);
+
+    tl.fromTo("#chip-capcut", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }, 2.79);
+    tl.fromTo("#capcut-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 4.15);
+    tl.fromTo("#capcut-x", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(3)" }, 4.2);
+    tl.to("#chip-capcut", { opacity: 0.55, duration: 0.2 }, 4.3);
+    tl.fromTo("#chip-canva", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.2)" }, 4.3);
+    tl.to(["#chip-capcut", "#chip-canva"], { opacity: 0, y: -20, duration: 0.25, ease: "power2.in" }, 4.9);
+
+    tl.fromTo("#hook-chat", { opacity: 0, y: 40, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power2.out" }, 6.11);
+    tl.fromTo("#hook-me", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 6.4);
+    tl.fromTo("#hook-reply", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 7.55);
+    tl.fromTo("#hook-timer", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.5)" }, 8.0);
+    tl.to(["#hook-chat", "#hook-timer"], { opacity: 0, duration: 0.25, ease: "power2.in" }, 8.75);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>
