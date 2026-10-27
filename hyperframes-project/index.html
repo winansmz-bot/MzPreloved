@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ms" data-composition-variables='[{"id":"presenter","type":"image","label":"Presenter","default":"assets/presenter.png"}]'>
+<html lang="ms">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
@@ -131,9 +131,9 @@
       data-height="1920"
     >
       <!-- Presenter "camera": the still is reframed with cuts and push-ins on emphasis -->
-      <div id="cam" class="clip" data-start="0" data-duration="65.85" data-track-index="0">
+      <div id="cam">
         <div id="cam-move" data-layout-allow-overflow>
-          <img id="presenter" src="assets/presenter.png" data-var-src="presenter" alt="" />
+          <video id="presenter" class="clip" src="assets/presenter.mp4" data-start="0" data-duration="65.85" data-track-index="0" muted playsinline></video>
           <div id="shade"></div>
         </div>
       </div>
