@@ -31,7 +31,7 @@ When writing a shot list, if two consecutive beats would use the same shot, chan
 The reference never shows full subtitles. It shows **one to three keywords per beat**, large and centred, across the middle of the frame (roughly chest height, never covering the eyes).
 
 - **Default caption:** white, heavy bold sans-serif, lowercase or sentence case, with a subtle shadow so it reads on any background.
-- **Emphasis caption:** the key phrase of a beat switches to an **italic serif in the accent colour** (the reference uses a deep red). Use this sparingly: about one beat in four. If everything is emphasised, nothing is.
+- **Emphasis caption:** the key phrase of a beat switches to an **italic serif in the accent colour** (deep green for MzPreloved; see section 5). Give it a thin off-white outline or soft light glow so a dark green still reads over moody footage. Use this sparingly: about one beat in four. If everything is emphasised, nothing is.
 - Pick the word that carries the meaning, not the filler. "further", "closer", "angle", "2 to 3 seconds", never "so", "and", "you know".
 - Captions appear exactly when the word is spoken and disappear before the next one. No long-lingering text.
 
@@ -60,7 +60,7 @@ Once in the reel, the face disappears entirely for a full-screen motion graphic:
 
 - Use **one** of these per video, around the middle, where attention tends to sag.
 - Keep it to the brand palette: accent colour background, white or off-white line art, no stock-footage look.
-- For MzPreloved this could be: a flat-lay of the item on the accent background, a simple line drawing of a hanger or price tag, or a before/after split.
+- For MzPreloved the background is deep green (or maroon in a maroon video). This could be: a flat-lay of the item on the accent background, a simple line drawing of a hanger or price tag, or a before/after split.
 
 ## 5. Light and colour stay consistent across every shot
 
@@ -68,7 +68,11 @@ Locations change constantly, but the look doesn't:
 - **Warm, moody, low-key lighting** from practical lamps; amber and purple/magenta accents in the background; never flat overhead light.
 - Background has texture: window blinds, a sofa, shelves, hangers on a rail. Hangers on a rail suit a clothing shop especially well.
 - The speaker wears the same outfit throughout, so the many cuts still feel like one video.
-- **One accent colour** ties captions and graphics together. The reference uses deep red; for MzPreloved choose one brand accent and use it everywhere the emphasis style or graphics appear.
+- **One accent colour** ties captions and graphics together. The reference uses deep red; MzPreloved uses:
+  - **Deep green `#1F4D3A`**: the default brand accent for emphasis captions and full-screen graphics.
+  - **Maroon `#6B1E2E`**: the alternative, for items where green clashes (green or olive clothing) or for a seasonal or festive feel.
+- Use **one accent per video**, never both. Within a video, every emphasis caption and graphic uses the same one.
+- Green sits well with the warm amber lighting; lean the background practicals amber rather than purple so the green captions don't fight a magenta cast.
 
 ## 6. Shooting setup (vertical, 9:16)
 
